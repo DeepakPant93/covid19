@@ -4,12 +4,18 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { DisplayBoardComponent } from './display-board/display-board.component';
+import { TabularViewComponent } from './tabular-view/tabular-view.component';
+import { GraphicalViewComponent } from './graphical-view/graphical-view.component';
+import { MapViewComponent } from './map-view/map-view.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    DisplayBoardComponent
+    DisplayBoardComponent,
+    TabularViewComponent,
+    GraphicalViewComponent,
+    MapViewComponent
   ],
   imports: [
     BrowserModule

@@ -13,8 +13,10 @@ export class DisplayBoardComponent implements OnInit, OnDestroy {
   totalCases: number;
   totalDeaths: number;
   totalRecovered: number;
+  newCases: number;
+  newDeaths: number;
+  newRecovered: number;
   subscription: Subscription;
-
   constructor(private covidService: Covid19Service) {
   }
 
@@ -23,6 +25,9 @@ export class DisplayBoardComponent implements OnInit, OnDestroy {
       this.totalCases = model.Global.TotalConfirmed;
       this.totalDeaths = model.Global.TotalDeaths;
       this.totalRecovered = model.Global.TotalRecovered;
+      this.newCases = model.Global.NewConfirmed;
+      this.newDeaths = model.Global.NewDeaths;
+      this.newRecovered = model.Global.NewRecovered;
     });
   }
 

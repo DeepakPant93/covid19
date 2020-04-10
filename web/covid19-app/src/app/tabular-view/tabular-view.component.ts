@@ -12,29 +12,13 @@ export class TabularViewComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   public rows: Array<any> = [];
   public columns: Array<any> = [
-    {
-      title: 'Country',
-      name: 'Country'
-    },
-    {
-      title: 'Total Cases',
-      name: 'TotalConfirmed',
-      sort: false
-    },
-    { title: 'New Cases', className: 'text-warning', name: 'NewConfirmed' },
-    {
-      title: 'Total Deaths',
-      className: ['office-header', 'text-success'],
-      name: 'TotalDeaths',
-      sort: 'asc',
-    },
+    { title: 'Country 1-1', name: 'Country' },
+    { title: 'Total Cases', name: 'TotalConfirmed', sort: 'desc' },
+    { title: 'New Cases', name: 'NewConfirmed' },
+    { title: 'Total Deaths', name: 'TotalDeaths'},
     { title: 'New Deaths', name: 'NewDeaths' },
-    {
-      title: 'Total Recovered.',
-      name: 'TotalRecovered',
-      sort: ''
-    },
-    { title: 'New Recovered', name: 'NewRecovered' },
+    { title: 'Total Recovered.', name: 'TotalRecovered' },
+    { title: 'New Recovered', name: 'NewRecovered' }
   ];
   public page = 1;
   public itemsPerPage = 10;
@@ -53,25 +37,18 @@ export class TabularViewComponent implements OnInit, OnDestroy {
 
   public constructor(private covid19Service: Covid19Service) {
     this.length = 0;
-
-
   }
 
   public ngOnInit(): void {
-    this.subscription =  this.covid19Service.covidSummaryModelSubject.subscribe((model) => { this.data = model.Countries;
-                                                                        this.length = this.data.length;
-                                                                        this.onChangeTable(this.config); });
+    this.subscription = this.covid19Service.covidSummaryModelSubject.subscribe((model) => {
+      this.data = model.Countries;
+      this.length = this.data.length;
+      this.onChangeTable(this.config);
+    });
   }
 
   public ngOnDestroy(): void {
-    this.subscription .unsubscribe();
-  }
-
-  public changePage(page: any, data: Array<any> = this.data): Array<any> {
-    const start = (page.page - 1) * page.itemsPerPage;
-    const end = page.itemsPerPage > -1 ? start + page.itemsPerPage : data.length;
-    // return data.slice(start, end);
-    return data;
+    this.subscription.unsubscribe();
   }
 
   public changeSort(data: any, config: any): any {
@@ -90,15 +67,9 @@ export class TabularViewComponent implements OnInit, OnDestroy {
       }
     }
 
-    if (true) {
-      return data;
-    }
-
     if (!columnName) {
       return data;
     }
-
-    // simple sorting
     return data.sort((previous: any, current: any) => {
       if (previous[columnName] > current[columnName]) {
         return sort === 'desc' ? -1 : 1;
@@ -111,17 +82,13 @@ export class TabularViewComponent implements OnInit, OnDestroy {
 
   public changeFilter(data: any, config: any): any {
     let filteredData: Array<any> = data;
-    // this.columns.forEach((column: any) => {
-    //   if (column.filtering) {
-    //     filteredData = filteredData.filter((item: any) => {
-    //       return item[column.Country].match(column.filtering.filterString);
-    //     });
-    //   }
-    // });
-    if (true) {
-      return filteredData;
-    }
-
+    this.columns.forEach((column: any) => {
+      if (column.filtering) {
+        filteredData = filteredData.filter((item: any) => {
+          return item[column.name].match(column.filtering.filterString);
+        });
+      }
+    });
     if (!config.filtering) {
       return filteredData;
     }
@@ -153,10 +120,7 @@ export class TabularViewComponent implements OnInit, OnDestroy {
     return filteredData;
   }
 
-  public onChangeTable(
-    config: any,
-    page: any = { page: this.page, itemsPerPage: this.itemsPerPage }
-  ): any {
+  public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {
     if (config.filtering) {
       Object.assign(this.config.filtering, config.filtering);
     }
@@ -167,12 +131,11 @@ export class TabularViewComponent implements OnInit, OnDestroy {
 
     const filteredData = this.changeFilter(this.data, this.config);
     const sortedData = this.changeSort(filteredData, this.config);
-    this.rows =
-      page && config.paging ? this.changePage(page, sortedData) : sortedData;
+    this.rows = sortedData;
     this.length = sortedData.length;
   }
 
-  public onCellClick(data: any): any {
-    console.log(data);
+  public onCellClick(data: Country): void {
+    // This method capture the data for a country
   }
 }

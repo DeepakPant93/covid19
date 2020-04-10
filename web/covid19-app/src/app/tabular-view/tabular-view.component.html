@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-4">
-    <input *ngIf="config.filtering" placeholder="Filter by country" [ngTableFiltering]="config.filtering"
+    <input *ngIf="config.filtering" placeholder="search ..." [ngTableFiltering]="config.filtering"
       class="form-control" (tableChanged)="onChangeTable(config)" />
   </div>
 </div>

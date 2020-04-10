@@ -12,7 +12,7 @@ export class TabularViewComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   public rows: Array<any> = [];
   public columns: Array<any> = [
-    { title: 'Country 1-1', name: 'Country' },
+    { title: 'Country', name: 'Country', class: ['font-weight-bold'] },
     { title: 'Total Cases', name: 'TotalConfirmed', sort: 'desc' },
     { title: 'New Cases', name: 'NewConfirmed' },
     { title: 'Total Deaths', name: 'TotalDeaths'},

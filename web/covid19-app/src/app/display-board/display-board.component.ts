@@ -10,6 +10,18 @@ import { Subscription } from 'rxjs';
 })
 export class DisplayBoardComponent implements OnInit, OnDestroy {
 
+  INFECTED = 'Infected';
+  RECOVERED = 'Recovered';
+  DEATHS = 'Deaths';
+
+  INFECTED_MSG = 'Total number of infected cases of Covid-19';
+  RECOVERED_MSG = 'Total number of recovered cases of Covid-19';
+  DEATHS_MSG = 'Total number of dead cases of Covid-19';
+
+  INFECTED_COLOR = 'purple';
+  RECOVERED_COLOR = 'green';
+  DEATHS_COLOR = 'red';
+
   totalCases: number;
   totalDeaths: number;
   totalRecovered: number;

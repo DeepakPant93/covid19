@@ -12,6 +12,7 @@ import { DisplayBoardComponent } from './display-board/display-board.component';
 import { TabularViewComponent } from './tabular-view/tabular-view.component';
 import { GraphicalViewComponent } from './graphical-view/graphical-view.component';
 import { MapViewComponent } from './map-view/map-view.component';
+import { ElementComponent } from './display-board/element/element.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { MapViewComponent } from './map-view/map-view.component';
     DisplayBoardComponent,
     TabularViewComponent,
     GraphicalViewComponent,
-    MapViewComponent
+    MapViewComponent,
+    ElementComponent
   ],
   imports: [
     BrowserModule,

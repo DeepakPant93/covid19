@@ -41,7 +41,7 @@ export class TabularViewComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.subscription = this.covid19Service.covidSummaryModelSubject.subscribe((model) => {
-      this.data = model.Countries;
+      this.data = model.Countries.filter(country => country.TotalConfirmed > 0).sort((a, b) => b.TotalConfirmed - a.TotalConfirmed );
       this.length = this.data.length;
       this.onChangeTable(this.config);
     });

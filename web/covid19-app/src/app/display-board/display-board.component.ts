@@ -28,6 +28,7 @@ export class DisplayBoardComponent implements OnInit, OnDestroy {
   newCases: number;
   newDeaths: number;
   newRecovered: number;
+
   subscription: Subscription;
   constructor(private covidService: Covid19Service) {
   }

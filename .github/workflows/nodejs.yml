@@ -1,7 +1,14 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Node.js CI
+name: CI-CD-pipeline-to-AWS-ElasticBeanstalk
+
+env:
+  EB_PACKAGE_S3_BUCKET_NAME : "covi19-app"
+  EB_APPLICATION_NAME       : "covid19-app"
+  EB_ENVIRONMENT_NAME       : "Covid19App-env"
+  DEPLOY_PACKAGE_NAME       : "covid19-app-${{ github.sha }}.zip"
+  AWS_REGION_NAME           : "ap-south-1"
 
 on:
   push:
@@ -12,22 +19,25 @@ on:
       - develop
 
 jobs:
-  build:
-
+  covid19_ci_pipeline:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [12.x]
-
+    
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - run: npm run build
-    - run: npm test
-      env:
-        CI: true
+      - name: Git cone covid19 ui repo
+        uses: actions/checkout@v2
+
+      - name: Create a ZIP deployment package
+        run: zip -r ${{ env.DEPLOY_PACKAGE_NAME }} ./ -x *.git*
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id     : ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key : ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region            : ${{ env.AWS_REGION_NAME }} 
+
+      - name: Copy deployment package to S3 bucket
+        run:  aws s3 cp ${{ env.DEPLOY_PACKAGE_NAME }} s3://${{ env.EB_PACKAGE_S3_BUCKET_NAME }}/
+        
+      - name: Print a message on completion
+        run: echo "CI pipeline for covid 19 is completed"

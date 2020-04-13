@@ -15,7 +15,7 @@ export class TabularViewComponent implements OnInit, OnDestroy {
     { title: 'Country', name: 'Country', class: ['font-weight-bold'] },
     { title: 'Total Cases', name: 'TotalConfirmed', sort: 'desc' },
     { title: 'New Cases', name: 'NewConfirmed' },
-    { title: 'Total Deaths', name: 'TotalDeaths'},
+    { title: 'Total Deaths', name: 'TotalDeaths' },
     { title: 'New Deaths', name: 'NewDeaths' },
     { title: 'Total Recovered.', name: 'TotalRecovered' },
     { title: 'New Recovered', name: 'NewRecovered' }
@@ -41,7 +41,7 @@ export class TabularViewComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.subscription = this.covid19Service.covidSummaryModelSubject.subscribe((model) => {
-      this.data = model.Countries.filter(country => country.TotalConfirmed > 0).sort((a, b) => b.TotalConfirmed - a.TotalConfirmed );
+      this.data = model.Countries.filter(country => country.TotalConfirmed > 0).sort((a, b) => b.TotalConfirmed - a.TotalConfirmed);
       this.length = this.data.length;
       this.onChangeTable(this.config);
     });
@@ -60,12 +60,12 @@ export class TabularViewComponent implements OnInit, OnDestroy {
     let columnName: string = void 0;
     let sort: string = void 0;
 
-    for (let i = 0; i < columns.length; i++) {
-      if (columns[i].sort !== '' && columns[i].sort !== false) {
-        columnName = columns[i].name;
-        sort = columns[i].sort;
+    columns.forEach(column => {
+      if (column.sort !== '' && column.sort !== false) {
+        columnName = column.name;
+        sort = column.sort;
       }
-    }
+    });
 
     if (!columnName) {
       return data;
@@ -82,31 +82,13 @@ export class TabularViewComponent implements OnInit, OnDestroy {
 
   public changeFilter(data: any, config: any): any {
     let filteredData: Array<any> = data;
-    this.columns.forEach((column: any) => {
-      if (column.filtering) {
-        filteredData = filteredData.filter((item: any) => {
-          return item[column.name].match(column.filtering.filterString);
-        });
-      }
-    });
-    if (!config.filtering) {
-      return filteredData;
-    }
-
-    if (config.filtering.columnName) {
-      return filteredData.filter((item: any) =>
-        item[config.filtering.columnName].match(
-          this.config.filtering.filterString
-        )
-      );
-    }
 
     const tempArray: Array<any> = [];
     filteredData.forEach((item: any) => {
       let flag = false;
       this.columns.forEach((column: any) => {
         if (
-          item[column.name].toString().match(this.config.filtering.filterString)
+          item[column.name].toString().toLowerCase().match(this.config.filtering.filterString.toLowerCase())
         ) {
           flag = true;
         }
@@ -129,10 +111,12 @@ export class TabularViewComponent implements OnInit, OnDestroy {
       Object.assign(this.config.sorting, config.sorting);
     }
 
-    const filteredData = this.changeFilter(this.data, this.config);
-    const sortedData = this.changeSort(filteredData, this.config);
-    this.rows = sortedData;
-    this.length = sortedData.length;
+    if (this.data) {
+      const filteredData = this.changeFilter(this.data, this.config);
+      const sortedData = this.changeSort(filteredData, this.config);
+      this.rows = sortedData;
+      this.length = sortedData.length;
+    }
   }
 
   public onCellClick(data: Country): void {

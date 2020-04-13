@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { Ng2TableModule } from 'ng2-table/ng2-table';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { DisplayBoardComponent } from './display-board/display-board.component';
@@ -14,6 +15,8 @@ import { GraphicalViewComponent } from './graphical-view/graphical-view.componen
 import { HeaderComponent } from './header/header.component';
 import { MapViewComponent } from './map-view/map-view.component';
 import { TabularViewComponent } from './tabular-view/tabular-view.component';
+import { BarChartVerticalComponent } from './chats/bar-chart-vertical/bar-chart-vertical.component';
+import { DropdownDirective } from './directive/dropdown.directive';
 
 
 
@@ -25,7 +28,9 @@ import { TabularViewComponent } from './tabular-view/tabular-view.component';
     TabularViewComponent,
     GraphicalViewComponent,
     MapViewComponent,
-    ElementComponent
+    ElementComponent,
+    BarChartVerticalComponent,
+    DropdownDirective
   ],
   imports: [
     BrowserModule,
@@ -33,7 +38,8 @@ import { TabularViewComponent } from './tabular-view/tabular-view.component';
     FormsModule,
     Ng2TableModule,
     BrowserAnimationsModule,
-    NgxChartsModule
+    NgxChartsModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

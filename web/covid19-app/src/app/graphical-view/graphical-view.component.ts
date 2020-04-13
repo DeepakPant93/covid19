@@ -1,6 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ViewChildren } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Covid19Service } from '../service/covid19.service';
+import { Country } from './../model/covid-summary.model';
+import { ChartModel } from './../model/chart.model';
 
 @Component({
   selector: 'app-graphical-view',
@@ -9,77 +11,48 @@ import { Covid19Service } from '../service/covid19.service';
 })
 export class GraphicalViewComponent implements OnInit, OnDestroy {
 
-  single = new Array<any>();
-  multi: any[];
-  view: any[] = [700, 400];
-  chartdata = new Array<ChartData>();
-
-// options
-showXAxis = true;
-showYAxis = true;
-gradient = false;
-showLegend = true;
-showXAxisLabel = true;
-xAxisLabel = 'Cases';
-showYAxisLabel = true;
-yAxisLabel = '';
-
-subscription: Subscription;
-
-colorScheme = {
-  domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
-};
-
-constructor(private covidService: Covid19Service) {
-  // Object.assign(this, { single });
-}
-
-ngOnInit() {
-  this.subscription = this.covidService.covidSummaryModelSubject.subscribe(model => {
-
-    const totalCases = new ChartData('Infected', model.Global.TotalConfirmed);
-    const totalDeaths = new ChartData('Deaths', model.Global.TotalDeaths);
-    const totalRecovered = new ChartData('Recovered', model.Global.TotalRecovered);
-
-    console.log('This is total case ' + totalCases.value);
+  subscription: Subscription;
+  countries: Country[];
+  countryNames: string[];
+  chartDataHolder: ChartModel[];
+  selectedCountryName: string;
 
 
-    this.single.push(totalCases);
-    this.single.push(totalDeaths);
-    this.single.push(totalRecovered);
+  constructor(private covidService: Covid19Service) { }
 
-    Object.assign(this, { single });
-
-  });
-  Object.assign(this, { single });
-}
-
-onSelect(event) {
-  console.log(event);
-}
-
-ngOnDestroy() {
-  this.subscription.unsubscribe();
-}
-
-}
-
-
-export var single = [
-  {
-    "name": "Germany",
-    "value": 8940
-  },
-  {
-    "name": "USA",
-    "value": 50
-  },
-  {
-    "name": "France",
-    "value": 72
+  ngOnInit() {
+    this.subscription = this.covidService.covidSummaryModelSubject.subscribe(model => {
+      this.countries = model.Countries.filter(country => country.TotalConfirmed > 0).sort((a, b) => b.TotalConfirmed - a.TotalConfirmed);
+      this.countryNames = this.countries.map(country => country.Country);
+      this.onSelectCountry(this.countryNames[0]);
+    });
   }
-];
 
-export class ChartData {
-  constructor(public name: string, public value: number) { }
+  onSelectCountry(countryName: string) {
+    if ('' !== countryName && this.countries) {
+      this.selectedCountryName = countryName;
+      this.chartDataHolder = this.convertToChartDataHolder(this.countries.find(country => countryName === country.Country));
+    }
+  }
+
+  private convertToChartDataHolder(country: Country) {
+    if (country) {
+      const chartDataHolder = new Array<ChartModel>();
+
+      const totalCases = new ChartModel('Infected', country.TotalConfirmed);
+      const totalRecovered = new ChartModel('Recovered', country.TotalRecovered);
+      const totalDeaths = new ChartModel('Deaths', country.TotalDeaths);
+
+      chartDataHolder.push(totalCases);
+      chartDataHolder.push(totalRecovered);
+      chartDataHolder.push(totalDeaths);
+
+      return chartDataHolder;
+    }
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
 }

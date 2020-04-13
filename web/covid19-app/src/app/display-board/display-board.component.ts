@@ -18,8 +18,8 @@ export class DisplayBoardComponent implements OnInit, OnDestroy {
   RECOVERED_MSG = 'Total number of recovered cases of Covid-19';
   DEATHS_MSG = 'Total number of dead cases of Covid-19';
 
-  INFECTED_COLOR = 'purple';
-  RECOVERED_COLOR = 'green';
+  INFECTED_COLOR = '#C7B42C';
+  RECOVERED_COLOR = '#5AA454';
   DEATHS_COLOR = 'red';
 
   totalCases: number;

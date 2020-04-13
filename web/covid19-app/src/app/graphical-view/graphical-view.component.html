@@ -1,14 +1,19 @@
-<ngx-charts-bar-vertical
-  [view]="view"
-  [scheme]="colorScheme"
-  [results]="single"
-  [gradient]="gradient"
-  [xAxis]="showXAxis"
-  [yAxis]="showYAxis"
-  [legend]="showLegend"
-  [showXAxisLabel]="showXAxisLabel"
-  [showYAxisLabel]="showYAxisLabel"
-  [xAxisLabel]="xAxisLabel"
-  [yAxisLabel]="yAxisLabel"
-  (select)="onSelect($event)">
-</ngx-charts-bar-vertical>
+<div class="row" *ngIf="countryNames">
+  <div class="col text-center" placement="top-center">
+    <h5 class="font-weight-bold">{{selectedCountryName}}</h5>
+  </div>
+  <div class="col" placement="top-right">
+    <div ngbDropdown class="d-inline-block float-right">
+      <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Select a country</button>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <button ngbDropdownItem *ngFor="let countryName of countryNames"
+          (click)="onSelectCountry(countryName)">{{countryName}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <app-bar-chart-vertical [chartDataHolder]="chartDataHolder" *ngIf="chartDataHolder"></app-bar-chart-vertical>
+  </div>
+</div>

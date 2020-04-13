@@ -1,4 +1,4 @@
-<div class="card-columns">
+<div class="card-columns" *ngIf="totalCases" >
   <div class="row">
     <div class="col-xs-4">
       <app-element [count]="totalCases" [name]="INFECTED" [message]="INFECTED_MSG" [color]="INFECTED_COLOR">

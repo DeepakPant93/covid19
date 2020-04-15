@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  covid19SummaryUri: 'https://api.covid19api.com/summary'
 };

@@ -10,7 +10,7 @@ import { ChartModel, CORONAVIRUS_CASES } from 'src/app/model/chart.model';
 export class BarChartVerticalComponent implements OnInit {
 
   multi: any[];
-  view: any[] = [700, 400];
+  view: any[] = [800, 400];
   chartdata = new Array<ChartModel>();
   @Input() chartDataHolder: ChartModel[];
 

@@ -4,4 +4,7 @@ header{
 
 footer{
   margin-top: 5em;
+  margin-bottom: 0em;
+  bottom: 0em;
+  position: static;
 }

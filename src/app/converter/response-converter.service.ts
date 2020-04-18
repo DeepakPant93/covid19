@@ -22,7 +22,7 @@ export class ResponseConverterService {
       const countries = this.populateCountries(countriesSumary);
 
       // Adding total as world in the first position
-      countries.splice(0, 0, total);
+      // countries.splice(0, 0, total);
 
       coronaData = new CoronaData(total, countries);
     }

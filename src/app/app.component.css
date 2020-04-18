@@ -2,6 +2,11 @@ header{
   margin-bottom: 3em;
 }
 
+section{
+  min-height: 65vh;
+}
+
+
 footer{
   margin-top: 5em;
   margin-bottom: 0em;

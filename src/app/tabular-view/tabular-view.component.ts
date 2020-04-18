@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatSort } from '@angular/material/sort';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { CoronaModel } from '../model/corona.model';
-import { CoronaService } from '../service/corona.service';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
+import { CoronaService } from '../service/corona.service';
+import { CoronaModel } from '../model/corona.model';
+import { ColorConstants } from '../model/color';
 
 export interface PeriodicElement {
   name: string;
@@ -13,23 +14,25 @@ export interface PeriodicElement {
   symbol: string;
 }
 
-let ELEMENT_DATA = new Array<CoronaModel>();
-
 @Component({
   selector: 'app-tabular-view',
   templateUrl: './tabular-view.component.html',
   styleUrls: ['./tabular-view.component.css']
 })
-export class TabularViewComponent implements OnInit, OnDestroy {
+export class TabularViewComponent implements OnInit, OnDestroy, AfterViewInit {
 
   subscription: Subscription;
   isDataLoaded = false;
+
+  INFECTED_COLOR = ColorConstants.INFECTED_COLOR;
+  RECOVERED_COLOR = ColorConstants.RECOVERED_COLOR;
+  DEATHS_COLOR = ColorConstants.DEATHS_COLOR;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   displayedColumns = ['countryName', 'infected', 'newInfected', 'death', 'newDeath', 'recovered', 'newRecovered'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  dataSource: MatTableDataSource<any>;
 
   constructor(private coronaService: CoronaService) { }
 
@@ -38,8 +41,7 @@ export class TabularViewComponent implements OnInit, OnDestroy {
       data => {
         if (data) {
           this.isDataLoaded = true;
-          ELEMENT_DATA = data.countries;
-          this.dataSource = new MatTableDataSource(ELEMENT_DATA);
+          this.dataSource = new MatTableDataSource(data.countries);
           this.dataSource.sort = this.sort;
           this.dataSource.paginator = this.paginator;
         }
@@ -47,8 +49,19 @@ export class TabularViewComponent implements OnInit, OnDestroy {
     );
   }
 
+  ngAfterViewInit() {
+    if (this.isDataLoaded) {
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+    }
+  }
+
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLocaleLowerCase();
+  }
+
+  getTotal(attribute: string) {
+    return this.dataSource.data.map(t => t[attribute]).reduce((acc, value) => acc + value, 0);
   }
 
   ngOnDestroy(): void {

@@ -2,12 +2,15 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CoronaModel } from '../model/corona.model';
 import { CoronaService } from '../service/corona.service';
 import { Subscription } from 'rxjs';
+import { ColorConstants } from '../model/color';
 
 @Component({
   selector: 'app-display-board',
   templateUrl: './display-board.component.html',
   styleUrls: ['./display-board.component.css']
 })
+
+
 export class DisplayBoardComponent implements OnInit, OnDestroy {
 
   INFECTED = 'Infected';
@@ -18,9 +21,9 @@ export class DisplayBoardComponent implements OnInit, OnDestroy {
   RECOVERED_MSG = 'recovered from Coronavirus';
   DEATHS_MSG = 'death from Coronavirus';
 
-  INFECTED_COLOR = '#C7B42C';
-  RECOVERED_COLOR = '#5AA454';
-  DEATHS_COLOR = 'red';
+  INFECTED_COLOR = ColorConstants.INFECTED_COLOR;
+  RECOVERED_COLOR = ColorConstants.RECOVERED_COLOR;
+  DEATHS_COLOR = ColorConstants.DEATHS_COLOR;
 
   subscription: Subscription;
   coronaModel: CoronaModel;

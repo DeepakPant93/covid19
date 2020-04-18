@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Covid19Service } from '../service/covid19.service';
-import { CovidSummaryModel } from '../model/covid-summary.model';
+import { CoronaModel } from '../model/corona.model';
+import { CoronaService } from '../service/corona.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -14,37 +14,31 @@ export class DisplayBoardComponent implements OnInit, OnDestroy {
   RECOVERED = 'Recovered';
   DEATHS = 'Deaths';
 
-  INFECTED_MSG = 'Total number of infected cases of Covid-19';
-  RECOVERED_MSG = 'Total number of recovered cases of Covid-19';
-  DEATHS_MSG = 'Total number of dead cases of Covid-19';
+  INFECTED_MSG = 'infected from Coronavirus';
+  RECOVERED_MSG = 'recovered from Coronavirus';
+  DEATHS_MSG = 'death from Coronavirus';
 
   INFECTED_COLOR = '#C7B42C';
   RECOVERED_COLOR = '#5AA454';
   DEATHS_COLOR = 'red';
 
-  totalCases: number;
-  totalDeaths: number;
-  totalRecovered: number;
-  newCases: number;
-  newDeaths: number;
-  newRecovered: number;
-
   subscription: Subscription;
-  constructor(private covidService: Covid19Service) {
+  coronaModel: CoronaModel;
+
+  constructor(private coronaService: CoronaService) {
   }
 
-  ngOnInit() {
-    this.subscription = this.covidService.covidSummaryModelSubject.subscribe(model => {
-      this.totalCases = model.Global.TotalConfirmed;
-      this.totalDeaths = model.Global.TotalDeaths;
-      this.totalRecovered = model.Global.TotalRecovered;
-      this.newCases = model.Global.NewConfirmed;
-      this.newDeaths = model.Global.NewDeaths;
-      this.newRecovered = model.Global.NewRecovered;
-    });
+  ngOnInit(): void {
+    this.subscription = this.coronaService.coronaModelSubject.subscribe(
+      data => {
+        if (data) {
+          this.coronaModel = data.total;
+        }
+      }
+    );
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 }

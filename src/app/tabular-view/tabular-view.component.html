@@ -1,0 +1,58 @@
+<div *ngIf="isDataLoaded">
+  <mat-form-field>
+    <input (keyup)="applyFilter($event.target.value)" matInput placeholder="Search">
+  </mat-form-field>
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+
+      <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+      <!-- Country Column -->
+      <ng-container matColumnDef="countryName">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef> Country </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+      <!-- Infected Column -->
+      <ng-container matColumnDef="infected">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef> Infected </th>
+        <td mat-cell *matCellDef="let element"> {{element.infected}} </td>
+      </ng-container>
+
+      <!-- New Infected Column -->
+      <ng-container matColumnDef="newInfected">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef> New Infected </th>
+        <td mat-cell *matCellDef="let element"> {{element.newInfected}} </td>
+      </ng-container>
+
+      <!-- Death Column -->
+      <ng-container matColumnDef="death">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef> Death </th>
+        <td mat-cell *matCellDef="let element"> {{element.death}} </td>
+      </ng-container>
+
+      <!-- New Death Column -->
+      <ng-container matColumnDef="newDeath">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef> New Death </th>
+        <td mat-cell *matCellDef="let element"> {{element.newDeath}} </td>
+      </ng-container>
+
+      <!-- Recovered Column -->
+      <ng-container matColumnDef="recovered">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef> Recovered </th>
+        <td mat-cell *matCellDef="let element"> {{element.recovered}} </td>
+      </ng-container>
+
+      <!-- New Recovered Column -->
+      <ng-container matColumnDef="newRecovered">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef> New Recovered </th>
+        <td mat-cell *matCellDef="let element"> {{element.newRecovered}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[50,100,250]"></mat-paginator>
+  </div>
+</div>

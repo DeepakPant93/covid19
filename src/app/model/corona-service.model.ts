@@ -1,10 +1,10 @@
-export class CovidSummaryModel {
+export class CoronaSummaryModel {
   constructor(
     // tslint:disable-next-line: no-shadowed-variable
     public Global: Global,
     public Date: string,
     public Countries: Country[]
-  ) {}
+  ) { }
 }
 
 export class Global {
@@ -15,8 +15,7 @@ export class Global {
     public TotalDeaths: number,
     public NewRecovered: number,
     public TotalRecovered: number,
-    public Date: string
-  ) {}
+  ) { }
 }
 
 export class Country {
@@ -32,5 +31,5 @@ export class Country {
     public NewRecovered: number,
     public TotalRecovered: number,
     public Date: string
-  ) {}
+  ) { }
 }

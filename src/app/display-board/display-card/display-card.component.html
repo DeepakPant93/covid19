@@ -1,0 +1,12 @@
+<mat-card>
+  <mat-card-title> <span [style.color]="color">{{name}} </span>
+    <span [style.marginLeft]="marginString">
+      <app-display-chip [chipCount]="chipCount"></app-display-chip>
+    </span>
+  </mat-card-title>
+  <mat-card-subtitle>{{date}}</mat-card-subtitle>
+  <mat-card-title>
+    <span class="mat-display-1">{{count | number }}</span>
+  </mat-card-title>
+  <mat-card-content>{{message}}</mat-card-content>
+</mat-card>

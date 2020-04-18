@@ -1,75 +1,73 @@
-<div *ngIf="isDataLoaded">
-  <mat-form-field>
-    <input (keyup)="applyFilter($event.target.value)" matInput placeholder="Search">
-  </mat-form-field>
-  <div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource" matSort>
+<mat-form-field>
+  <input (keyup)="applyFilter($event.target.value)" matInput placeholder="Search">
+</mat-form-field>
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort>
 
-      <!--- Note that these columns can be defined in any order.
+    <!--- Note that these columns can be defined in any order.
         The actual rendered columns are set as a property on the row definition" -->
 
-      <!-- Country Column -->
-      <ng-container matColumnDef="countryName">
-        <th mat-header-cell mat-sort-header *matHeaderCellDef class="header-row"> Country </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-        <td mat-footer-cell *matFooterCellDef> Total </td>
-      </ng-container>
+    <!-- Country Column -->
+    <ng-container matColumnDef="countryName">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef class="header-row"> Country </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      <td mat-footer-cell *matFooterCellDef> Total </td>
+    </ng-container>
 
-      <!-- Infected Column -->
-      <ng-container matColumnDef="infected">
-        <th mat-header-cell mat-sort-header *matHeaderCellDef class="header-row"> Infected </th>
-        <td mat-cell *matCellDef="let element"> {{element.infected | number}} </td>
-        <td mat-footer-cell *matFooterCellDef> {{getTotal('infected') | number}} </td>
-      </ng-container>
+    <!-- Infected Column -->
+    <ng-container matColumnDef="infected">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef class="header-row"> Infected </th>
+      <td mat-cell *matCellDef="let element"> {{element.infected | number}} </td>
+      <td mat-footer-cell *matFooterCellDef> {{getTotal('infected') | number}} </td>
+    </ng-container>
 
-      <!-- New Infected Column -->
-      <ng-container matColumnDef="newInfected">
-        <th mat-header-cell mat-sort-header *matHeaderCellDef class="header-row"> New Infected </th>
-        <td mat-cell *matCellDef="let element"> <span *ngIf="element.newInfected" [style.color]="INFECTED_COLOR">
-            {{element.newInfected | number}}
-          </span> </td>
-        <td mat-footer-cell *matFooterCellDef> <span [style.color]="INFECTED_COLOR">
-            {{getTotal('newInfected') | number}} </span> </td>
-      </ng-container>
+    <!-- New Infected Column -->
+    <ng-container matColumnDef="newInfected">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef class="header-row"> New Infected </th>
+      <td mat-cell *matCellDef="let element"> <span *ngIf="element.newInfected" [style.color]="INFECTED_COLOR">
+          {{element.newInfected | number}}
+        </span> </td>
+      <td mat-footer-cell *matFooterCellDef> <span [style.color]="INFECTED_COLOR">
+          {{getTotal('newInfected') | number}} </span> </td>
+    </ng-container>
 
-      <!-- Death Column -->
-      <ng-container matColumnDef="death">
-        <th mat-header-cell mat-sort-header *matHeaderCellDef class="header-row"> Death </th>
-        <td mat-cell *matCellDef="let element">
-          {{element.death | number}} </td>
-        <td mat-footer-cell *matFooterCellDef> {{getTotal('death') | number}} </td>
-      </ng-container>
+    <!-- Death Column -->
+    <ng-container matColumnDef="death">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef class="header-row"> Death </th>
+      <td mat-cell *matCellDef="let element">
+        {{element.death | number}} </td>
+      <td mat-footer-cell *matFooterCellDef> {{getTotal('death') | number}} </td>
+    </ng-container>
 
-      <!-- New Death Column -->
-      <ng-container matColumnDef="newDeath">
-        <th mat-header-cell mat-sort-header *matHeaderCellDef class="header-row"> New Death </th>
-        <td mat-cell *matCellDef="let element"> <span *ngIf="element.newDeath" [style.color]="DEATHS_COLOR">
-            {{element.newDeath | number}} </span> </td>
-        <td mat-footer-cell *matFooterCellDef> <span [style.color]="DEATHS_COLOR">
-            {{getTotal('newDeath') | number}} </span> </td>
-      </ng-container>
+    <!-- New Death Column -->
+    <ng-container matColumnDef="newDeath">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef class="header-row"> New Death </th>
+      <td mat-cell *matCellDef="let element"> <span *ngIf="element.newDeath" [style.color]="DEATHS_COLOR">
+          {{element.newDeath | number}} </span> </td>
+      <td mat-footer-cell *matFooterCellDef> <span [style.color]="DEATHS_COLOR">
+          {{getTotal('newDeath') | number}} </span> </td>
+    </ng-container>
 
-      <!-- Recovered Column -->
-      <ng-container matColumnDef="recovered">
-        <th mat-header-cell mat-sort-header *matHeaderCellDef class="header-row"> Recovered </th>
-        <td mat-cell *matCellDef="let element">
-          {{element.recovered | number}} </td>
-        <td mat-footer-cell *matFooterCellDef> {{getTotal('recovered') | number}} </td>
-      </ng-container>
+    <!-- Recovered Column -->
+    <ng-container matColumnDef="recovered">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef class="header-row"> Recovered </th>
+      <td mat-cell *matCellDef="let element">
+        {{element.recovered | number}} </td>
+      <td mat-footer-cell *matFooterCellDef> {{getTotal('recovered') | number}} </td>
+    </ng-container>
 
-      <!-- New Recovered Column -->
-      <ng-container matColumnDef="newRecovered">
-        <th mat-header-cell mat-sort-header *matHeaderCellDef class="header-row"> New Recovered </th>
-        <td mat-cell *matCellDef="let element"> <span *ngIf="element.newRecovered" [style.color]="RECOVERED_COLOR">
-            {{element.newRecovered | number}} </span> </td>
-        <td mat-footer-cell *matFooterCellDef> <span [style.color]="RECOVERED_COLOR">
-            {{getTotal('newRecovered') | number}} </span></td>
-      </ng-container>
+    <!-- New Recovered Column -->
+    <ng-container matColumnDef="newRecovered">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef class="header-row"> New Recovered </th>
+      <td mat-cell *matCellDef="let element"> <span *ngIf="element.newRecovered" [style.color]="RECOVERED_COLOR">
+          {{element.newRecovered | number}} </span> </td>
+      <td mat-footer-cell *matFooterCellDef> <span [style.color]="RECOVERED_COLOR">
+          {{getTotal('newRecovered') | number}} </span></td>
+    </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns" class="header-row"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      <tr mat-footer-row *matFooterRowDef="displayedColumns" class="footer-row"></tr>
-    </table>
-    <mat-paginator [pageSizeOptions]="[50,100,250]"></mat-paginator>
-  </div>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns" class="header-row"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-footer-row *matFooterRowDef="displayedColumns" class="footer-row"></tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[25,50,100,250]" showFirstLastButtons></mat-paginator>
 </div>

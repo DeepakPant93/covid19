@@ -32,7 +32,7 @@ export class TabularViewComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   displayedColumns = ['countryName', 'infected', 'newInfected', 'death', 'newDeath', 'recovered', 'newRecovered'];
-  dataSource: MatTableDataSource<any>;
+  dataSource = new MatTableDataSource();
 
   constructor(private coronaService: CoronaService) { }
 
@@ -41,19 +41,15 @@ export class TabularViewComponent implements OnInit, OnDestroy, AfterViewInit {
       data => {
         if (data) {
           this.isDataLoaded = true;
-          this.dataSource = new MatTableDataSource(data.countries);
-          this.dataSource.sort = this.sort;
-          this.dataSource.paginator = this.paginator;
+          this.dataSource.data = data.countries;
         }
       }
     );
   }
 
-  ngAfterViewInit() {
-    if (this.isDataLoaded) {
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-    }
+  ngAfterViewInit(): void {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
   applyFilter(filterValue: string) {

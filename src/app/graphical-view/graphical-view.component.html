@@ -1,4 +1,4 @@
-<table *ngIf="countryNames">
+<!-- <table *ngIf="countryNames" >
   <tr>
     <td align="center"> <span class="mat-title">{{ selected }}</span></td>
     <td>
@@ -16,4 +16,25 @@
   <tr>
     <app-bar-chart [chartDataHolder]="chartDataHolder"></app-bar-chart>
   </tr>
-</table>
+</table> -->
+
+<br><br><br><br>
+<div class="graphical-view">
+  <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="3em" fxLayoutAlign="center center">
+    <span class="mat-title" fxFlex="60" fxLayoutAlign="center center">{{ selected }}</span>
+
+    <mat-form-field fxFlex="30" fxLayoutAlign="center center">
+      <mat-label>Country</mat-label>
+      <mat-select [(value)]="selected">
+        <mat-option *ngFor="let countryName of countryNames" [value]="countryName"
+          (click)="onSelectCountry(countryName)">
+          {{countryName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start center">
+    <app-bar-chart fxFlex="75" [chartDataHolder]="chartDataHolder"></app-bar-chart>
+  </div>
+</div>

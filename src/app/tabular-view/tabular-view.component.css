@@ -1,5 +1,5 @@
 table {
-  width: 100%;
+  width: 80vw;
 }
 
 .footer-row {
@@ -9,4 +9,13 @@ table {
 .header-row {
   font-weight: bold;
   font-size: 1em;
+}
+
+.example-container {
+  width: 80vw;
+  overflow: auto;
+}
+
+th.mat-column-position, td.mat-column-position {
+  padding-left: 8px;
 }

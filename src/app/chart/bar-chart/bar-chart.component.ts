@@ -10,7 +10,6 @@ import { ColorConstants } from '../../model/color';
 export class BarChartComponent implements OnInit {
 
   multi: any[];
-  view: any[] = [800, 400];
   chartdata = new Array<ChartModel>();
   @Input() chartDataHolder: ChartModel[];
 

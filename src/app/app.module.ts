@@ -2,6 +2,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ChartsModule } from 'ng2-charts';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DisplayBoardComponent } from './display-board/display-board.component';
@@ -12,8 +13,8 @@ import { GraphicalViewComponent } from './graphical-view/graphical-view.componen
 import { HeaderComponent } from './header/header.component';
 import { MaterialModule } from './material/material.module';
 import { TabularViewComponent } from './tabular-view/tabular-view.component';
-
-
+import { BarChartComponent } from './chart/bar-chart/bar-chart.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,6 +25,7 @@ import { TabularViewComponent } from './tabular-view/tabular-view.component';
     DisplayCardComponent,
     FooterComponent,
     DisplayChipComponent,
+    BarChartComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,6 +33,8 @@ import { TabularViewComponent } from './tabular-view/tabular-view.component';
     BrowserAnimationsModule,
     MaterialModule,
     HttpClientModule,
+    ChartsModule,
+    NgxChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

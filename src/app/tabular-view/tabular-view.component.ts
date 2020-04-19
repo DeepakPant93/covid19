@@ -3,9 +3,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
-import { CoronaService } from '../service/corona.service';
-import { CoronaModel } from '../model/corona.model';
 import { ColorConstants } from '../model/color';
+import { CoronaService } from '../service/corona.service';
 
 export interface PeriodicElement {
   name: string;

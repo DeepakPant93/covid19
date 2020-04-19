@@ -1,16 +1,15 @@
-<table align="center" *ngIf="coronaModel">
-  <tr>
-    <td>
-      <app-display-card [count]="coronaModel.infected" [chipCount]="coronaModel.newInfected" [date]="coronaModel.date"
-        [name]="INFECTED" [message]="INFECTED_MSG" [color]="INFECTED_COLOR" [margin]="4"></app-display-card>
-    </td>
-    <td>
-      <app-display-card [count]="coronaModel.recovered" [chipCount]="coronaModel.newRecovered" [date]="coronaModel.date"
-        [name]="RECOVERED" [message]="RECOVERED_MSG" [color]="RECOVERED_COLOR" [margin]="3"></app-display-card>
-    </td>
-    <td>
-      <app-display-card [count]="coronaModel.death" [chipCount]="coronaModel.newDeath" [date]="coronaModel.date"
-        [name]="DEATHS" [message]="DEATHS_MSG" [color]="DEATHS_COLOR" [margin]="5"></app-display-card>
-    </td>
-  </tr>
-</table>
+<div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="3em" fxLayoutAlign="center center" class="display-board">
+  <ng-container>
+    <app-display-card fxFlex="30" [count]="coronaModel.infected" [chipCount]="coronaModel.newInfected"
+      [date]="coronaModel.date" [name]="INFECTED" [message]="INFECTED_MSG" [color]="INFECTED_COLOR" [margin]="4">
+    </app-display-card>
+
+    <app-display-card fxFlex="30" [count]="coronaModel.recovered" [chipCount]="coronaModel.newRecovered"
+      [date]="coronaModel.date" [name]="RECOVERED" [message]="RECOVERED_MSG" [color]="RECOVERED_COLOR" [margin]="3">
+    </app-display-card>
+
+    <app-display-card fxFlex="30" [count]="coronaModel.death" [chipCount]="coronaModel.newDeath"
+      [date]="coronaModel.date" [name]="DEATHS" [message]="DEATHS_MSG" [color]="DEATHS_COLOR" [margin]="5">
+    </app-display-card>
+  </ng-container>
+</div>

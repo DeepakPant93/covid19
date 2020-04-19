@@ -12,7 +12,7 @@ import { CoronaService } from '../service/corona.service';
 export class GraphicalViewComponent implements OnInit, OnDestroy {
 
   subscription: Subscription;
-  countries: CoronaModel[];
+  countries = new Array<CoronaModel>();
   countryNames: string[];
   chartDataHolder: ChartModel[];
   selectedCountryName: string;
@@ -22,7 +22,11 @@ export class GraphicalViewComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.coronaService.coronaModelSubject.subscribe(data => {
-      this.countries = data.countries;
+      this.countries.push(...data.countries);
+
+      // Adding total as world in the first position
+      this.countries.splice(0, 0, data.total);
+
       this.countryNames = this.countries.map(country => country.name);
       this.selected = this.countryNames[0];
       this.onSelectCountry(this.selected);

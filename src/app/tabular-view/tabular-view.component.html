@@ -11,7 +11,7 @@
     <ng-container matColumnDef="countryName">
       <th mat-header-cell mat-sort-header *matHeaderCellDef class="header-row"> Country </th>
       <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-      <td mat-footer-cell *matFooterCellDef> Total </td>
+      <td mat-footer-cell *matFooterCellDef> World </td>
     </ng-container>
 
     <!-- Infected Column -->
@@ -24,7 +24,7 @@
     <!-- New Infected Column -->
     <ng-container matColumnDef="newInfected">
       <th mat-header-cell mat-sort-header *matHeaderCellDef class="header-row"> New Infected </th>
-      <td mat-cell *matCellDef="let element"> <span *ngIf="element.newInfected" [style.color]="INFECTED_COLOR">
+      <td mat-cell *matCellDef="let element"> <span *ngIf="element.newInfected" [style.color]="INFECTED_COLOR" class="footer-row">
           {{element.newInfected | number}}
         </span> </td>
       <td mat-footer-cell *matFooterCellDef> <span [style.color]="INFECTED_COLOR">
@@ -42,7 +42,7 @@
     <!-- New Death Column -->
     <ng-container matColumnDef="newDeath">
       <th mat-header-cell mat-sort-header *matHeaderCellDef class="header-row"> New Death </th>
-      <td mat-cell *matCellDef="let element"> <span *ngIf="element.newDeath" [style.color]="DEATHS_COLOR">
+      <td mat-cell *matCellDef="let element"> <span *ngIf="element.newDeath" [style.color]="DEATHS_COLOR" class="footer-row">
           {{element.newDeath | number}} </span> </td>
       <td mat-footer-cell *matFooterCellDef> <span [style.color]="DEATHS_COLOR">
           {{getTotal('newDeath') | number}} </span> </td>
@@ -59,7 +59,7 @@
     <!-- New Recovered Column -->
     <ng-container matColumnDef="newRecovered">
       <th mat-header-cell mat-sort-header *matHeaderCellDef class="header-row"> New Recovered </th>
-      <td mat-cell *matCellDef="let element"> <span *ngIf="element.newRecovered" [style.color]="RECOVERED_COLOR">
+      <td mat-cell *matCellDef="let element"> <span *ngIf="element.newRecovered" [style.color]="RECOVERED_COLOR" class="footer-row">
           {{element.newRecovered | number}} </span> </td>
       <td mat-footer-cell *matFooterCellDef> <span [style.color]="RECOVERED_COLOR">
           {{getTotal('newRecovered') | number}} </span></td>
